@@ -31,10 +31,26 @@ namespace Humanizer.Core.ge
 
             output += Convert.ToInt32(bumbers[0]).ToWords();
 
+
             if (Convert.ToInt32(bumbers[1]) > 0)
             {
                 output += " მთელი ";
                 output += Convert.ToInt32(bumbers[1]).ToWords();
+
+                output +=
+                bumbers[1].Length switch
+                {
+                    int len when len > 8 => " მემილიარდედი",
+                    int len when len > 7 => " მეასიმილიონედი",
+                    int len when len > 6 => " მეათიმილიონედი",
+                    int len when len > 5 => " მემილიონედი",
+                    int len when len > 4 => " მეასიათასედი",
+                    int len when len > 3 => " მეათიათასედი",
+                    int len when len > 2 => " მეათასედი",
+                    int len when len > 1 => " მეასედი",
+                    int len when len > 0 => " მეათედი",
+                    _ => default
+                };
             }
 
             return output.Trim();
